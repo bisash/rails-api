@@ -23,7 +23,11 @@ default: &default
 
 development:
   <<: *default
-  database: questions-answers-api_development
+  host: ec2-34-195-169-25.compute-1.amazonaws.com
+  url: postgres://khouekaeyzhvqu:41353a3251966b3ed54f09081006bc64e05c9d07ffa99370dcae725e7808ceed@ec2-34-195-169-25.compute-1.amazonaws.com:5432/ders4n59nfbkck
+  database: ders4n59nfbkck
+  username: khouekaeyzhvqu
+  password: 41353a3251966b3ed54f09081006bc64e05c9d07ffa99370dcae725e7808ceed
 
   # The specified database role being used to connect to postgres.
   # To create additional roles in postgres see `$ createuser --help`.
