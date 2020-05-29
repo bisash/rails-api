@@ -12,18 +12,12 @@ module Api
             end
 
             def create
-                parameters = answer_params
-                if parameters.has_key?(:user_id) && parameters.has_key?(:question_id) && parameters.has_key?(:answer)
-                    answer = Answer.new(parameters)
-
-                    if answer.save
-                        render json: AnswerSerializer.new(answer).serialized_json
-                    else
-                        render json: {error: answer.errors.messages}, status: 422
-                    end
+                answer = Answer.new(answer_params)
+                if answer.save
+                    render json: AnswerSerializer.new(answer).serialized_json
                 else
-                    render json: {error: "To create a answer you need to send user_id, question_id and answer"}, status: 422    
-                end    
+                    render json: {error: answer.errors.messages}, status: 422
+                end
             end
 
             def update
@@ -48,7 +42,7 @@ module Api
 
             private
             def answer_params
-                params.permit(:ID, :answer, :question_id, :user_id)
+                params.require(:answer).permit(:ID, :answer, :question_id, :user_id)
             end
 
             def options

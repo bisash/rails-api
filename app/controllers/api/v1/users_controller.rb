@@ -12,18 +12,11 @@ module Api
             end
 
             def create
-                parameters = user_params
-
-                if parameters.has_key?(:name) && parameters.has_key?(:email)
-                    user = User.new(user_params)
-
-                    if user.save
-                        render json: UserSerializer.new(user).serialized_json
-                    else
-                        render json: {error: user.errors.messages}, status: 422
-                    end    
+                user = User.new(user_params)
+                if user.save
+                    render json: UserSerializer.new(user).serialized_json
                 else
-                    render json: {error: "To create user you need to send name and email"}, status: 422    
+                    render json: {error: user.errors.messages}, status: 422
                 end
             end
 

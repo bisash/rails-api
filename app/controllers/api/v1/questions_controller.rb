@@ -12,18 +12,11 @@ module Api
             end
 
             def create
-                parameters = question_params
-
-                if parameters.has_key?(:label) && parameters.has_key?(:active)
-                    question = Question.new(question_params)
-
-                    if question.save
-                        render json: QuestionSerializer.new(question).serialized_json
-                    else
-                        render json: {error: question.errors.messages}, status: 422
-                    end    
+                question = Question.new(question_params)
+                if question.save
+                    render json: QuestionSerializer.new(question).serialized_json
                 else
-                    render json: {error: "To create a question you need to send label and active"}, status: 422    
+                    render json: {error: question.errors.messages}, status: 422
                 end
             end
 
