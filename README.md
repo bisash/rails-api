@@ -1,24 +1,10 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This api is only to a test, don't use in production
 
-Things you may want to cover:
-
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+# Steps
+- Go to the path project
+- Run ```gem install or bundle install```
+- Then if you use the local machine run ```rails db:create```
+- If you want use test data use ```rails db:seed```
+- If you use local machine run ```rails s``` to up local server
