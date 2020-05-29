@@ -1,0 +1,56 @@
+module Api
+    module V1
+        class UsersController < ApplicationController
+            def index
+                users = User.all
+                render json: UserSerializer.new(users).serialized_json
+            end
+
+            def show
+                user = User.find_by(id: params[:id])
+                render json: UserSerializer.new(user).serialized_json
+            end
+
+            def create
+                parameters = user_params
+
+                if parameters.has_key?(:name) && parameters.has_key?(:email)
+                    user = User.new(user_params)
+
+                    if user.save
+                        render json: UserSerializer.new(user).serialized_json
+                    else
+                        render json: {error: user.errors.messages}, status: 422
+                    end    
+                else
+                    render json: {error: "To create user you need to send name and email"}, status: 422    
+                end
+            end
+
+            def update
+                user = User.find_by(id: params[:id])
+
+                if user.update(user_params)
+                    render json: UserSerializer.new(user).serialized_json
+                else
+                    render json: {error: user.errors.messages}, status: 422
+                end
+            end
+
+            def destroy
+                user = User.find_by(id: params[:id])
+
+                if user.destroy
+                    head :no_content
+                else
+                    render json: {error: user.errors.messages}, status: 422
+                end
+            end
+
+            private
+            def user_params
+                params.require(:user).permit(:ID, :name, :email)
+            end
+        end
+    end
+end
