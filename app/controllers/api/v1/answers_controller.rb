@@ -2,7 +2,9 @@ module Api
     module V1
         class AnswersController < ApplicationController
             def index
-                answers = Answer.all
+                # answers = Answer.all
+                p query_params
+                answers = Answer.joins(:question, :user).where(query_params)
                 render json: AnswerSerializer.new(answers, options).serialized_json
             end
 
@@ -49,6 +51,10 @@ module Api
             private
             def answer_params
                 params.permit(:ID, :answer, :question_id, :user_id)
+            end
+
+            def query_params
+                params.permit(:question_id, :user_id, :"questions.label", :"questions.active", :"users.name", :"users.email")
             end
 
             def options
